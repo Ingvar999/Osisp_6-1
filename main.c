@@ -41,11 +41,10 @@ void *ThreadFunc(void *args)
 	
 	float result = sign * pow / fact;
 
-	printf("%d / %d / %d / %.4f\n", pthread_self(), i, j, result);  
-
+	printf("%u / %d / %d / %.4f\n", pthread_self(), i, j, result);  
+	pthread_mutex_lock(&mutex);
 	fseek(f, (i*n + j)*sizeof(float), SEEK_SET);
 	fwrite(&result, sizeof(float), 1, f);
-	pthread_mutex_lock(&mutex);
 	--count;
 	pthread_mutex_unlock(&mutex);
 	return 0;
